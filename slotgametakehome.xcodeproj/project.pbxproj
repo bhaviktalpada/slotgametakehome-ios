@@ -1,0 +1,616 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		3213CF983089B2FE001F97E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3213CF793089B2FC001F97E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3213CF803089B2FC001F97E3;
+			remoteInfo = slotgametakehome;
+		};
+		3213CFA23089B2FE001F97E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3213CF793089B2FC001F97E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3213CF803089B2FC001F97E3;
+			remoteInfo = slotgametakehome;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3213CF813089B2FC001F97E3 /* slotgametakehome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slotgametakehome.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3213CF973089B2FE001F97E3 /* slotgametakehomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slotgametakehomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3213CFA13089B2FE001F97E3 /* slotgametakehomeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slotgametakehomeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		3213CFA93089B2FE001F97E3 /* Exceptions for "slotgametakehome" folder in "slotgametakehome" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3213CF803089B2FC001F97E3 /* slotgametakehome */;
+		};
+		32F5A3CA308A4B56002B44AB /* Exceptions for "slotgametakehome" folder in "slotgametakehomeTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Resoureces/spinning-sound.wav",
+			);
+			target = 3213CF963089B2FE001F97E3 /* slotgametakehomeTests */;
+		};
+		32F5A3CB308A4B56002B44AB /* Exceptions for "slotgametakehome" folder in "slotgametakehomeUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Resoureces/spinning-sound.wav",
+			);
+			target = 3213CFA03089B2FE001F97E3 /* slotgametakehomeUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		3213CF833089B2FC001F97E3 /* slotgametakehome */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3213CFA93089B2FE001F97E3 /* Exceptions for "slotgametakehome" folder in "slotgametakehome" target */,
+				32F5A3CA308A4B56002B44AB /* Exceptions for "slotgametakehome" folder in "slotgametakehomeTests" target */,
+				32F5A3CB308A4B56002B44AB /* Exceptions for "slotgametakehome" folder in "slotgametakehomeUITests" target */,
+			);
+			path = slotgametakehome;
+			sourceTree = "<group>";
+		};
+		3213CF9A3089B2FE001F97E3 /* slotgametakehomeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = slotgametakehomeTests;
+			sourceTree = "<group>";
+		};
+		3213CFA43089B2FE001F97E3 /* slotgametakehomeUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = slotgametakehomeUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3213CF7E3089B2FC001F97E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3213CF943089B2FE001F97E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3213CF9E3089B2FE001F97E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3213CF783089B2FC001F97E3 = {
+			isa = PBXGroup;
+			children = (
+				3213CF833089B2FC001F97E3 /* slotgametakehome */,
+				3213CF9A3089B2FE001F97E3 /* slotgametakehomeTests */,
+				3213CFA43089B2FE001F97E3 /* slotgametakehomeUITests */,
+				3213CF823089B2FC001F97E3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3213CF823089B2FC001F97E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3213CF813089B2FC001F97E3 /* slotgametakehome.app */,
+				3213CF973089B2FE001F97E3 /* slotgametakehomeTests.xctest */,
+				3213CFA13089B2FE001F97E3 /* slotgametakehomeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3213CF803089B2FC001F97E3 /* slotgametakehome */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3213CFAA3089B2FE001F97E3 /* Build configuration list for PBXNativeTarget "slotgametakehome" */;
+			buildPhases = (
+				3213CF7D3089B2FC001F97E3 /* Sources */,
+				3213CF7E3089B2FC001F97E3 /* Frameworks */,
+				3213CF7F3089B2FC001F97E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3213CF833089B2FC001F97E3 /* slotgametakehome */,
+			);
+			name = slotgametakehome;
+			packageProductDependencies = (
+			);
+			productName = slotgametakehome;
+			productReference = 3213CF813089B2FC001F97E3 /* slotgametakehome.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3213CF963089B2FE001F97E3 /* slotgametakehomeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3213CFAF3089B2FE001F97E3 /* Build configuration list for PBXNativeTarget "slotgametakehomeTests" */;
+			buildPhases = (
+				3213CF933089B2FE001F97E3 /* Sources */,
+				3213CF943089B2FE001F97E3 /* Frameworks */,
+				3213CF953089B2FE001F97E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3213CF993089B2FE001F97E3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3213CF9A3089B2FE001F97E3 /* slotgametakehomeTests */,
+			);
+			name = slotgametakehomeTests;
+			packageProductDependencies = (
+			);
+			productName = slotgametakehomeTests;
+			productReference = 3213CF973089B2FE001F97E3 /* slotgametakehomeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3213CFA03089B2FE001F97E3 /* slotgametakehomeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3213CFB23089B2FE001F97E3 /* Build configuration list for PBXNativeTarget "slotgametakehomeUITests" */;
+			buildPhases = (
+				3213CF9D3089B2FE001F97E3 /* Sources */,
+				3213CF9E3089B2FE001F97E3 /* Frameworks */,
+				3213CF9F3089B2FE001F97E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3213CFA33089B2FE001F97E3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3213CFA43089B2FE001F97E3 /* slotgametakehomeUITests */,
+			);
+			name = slotgametakehomeUITests;
+			packageProductDependencies = (
+			);
+			productName = slotgametakehomeUITests;
+			productReference = 3213CFA13089B2FE001F97E3 /* slotgametakehomeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3213CF793089B2FC001F97E3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					3213CF803089B2FC001F97E3 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					3213CF963089B2FE001F97E3 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = 3213CF803089B2FC001F97E3;
+					};
+					3213CFA03089B2FE001F97E3 = {
+						CreatedOnToolsVersion = 26.4;
+						TestTargetID = 3213CF803089B2FC001F97E3;
+					};
+				};
+			};
+			buildConfigurationList = 3213CF7C3089B2FC001F97E3 /* Build configuration list for PBXProject "slotgametakehome" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3213CF783089B2FC001F97E3;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3213CF823089B2FC001F97E3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3213CF803089B2FC001F97E3 /* slotgametakehome */,
+				3213CF963089B2FE001F97E3 /* slotgametakehomeTests */,
+				3213CFA03089B2FE001F97E3 /* slotgametakehomeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3213CF7F3089B2FC001F97E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3213CF953089B2FE001F97E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3213CF9F3089B2FE001F97E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3213CF7D3089B2FC001F97E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3213CF933089B2FE001F97E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3213CF9D3089B2FE001F97E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3213CF993089B2FE001F97E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3213CF803089B2FC001F97E3 /* slotgametakehome */;
+			targetProxy = 3213CF983089B2FE001F97E3 /* PBXContainerItemProxy */;
+		};
+		3213CFA33089B2FE001F97E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3213CF803089B2FC001F97E3 /* slotgametakehome */;
+			targetProxy = 3213CFA23089B2FE001F97E3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3213CFAB3089B2FE001F97E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33PF7CDTHA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = slotgametakehome/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.game.slotgametakehome;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3213CFAC3089B2FE001F97E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33PF7CDTHA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = slotgametakehome/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.game.slotgametakehome;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3213CFAD3089B2FE001F97E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 33PF7CDTHA;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		3213CFAE3089B2FE001F97E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 33PF7CDTHA;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3213CFB03089B2FE001F97E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33PF7CDTHA;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.game.slotgametakehomeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slotgametakehome.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/slotgametakehome";
+			};
+			name = Debug;
+		};
+		3213CFB13089B2FE001F97E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33PF7CDTHA;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.game.slotgametakehomeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/slotgametakehome.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/slotgametakehome";
+			};
+			name = Release;
+		};
+		3213CFB33089B2FE001F97E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33PF7CDTHA;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.game.slotgametakehomeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = slotgametakehome;
+			};
+			name = Debug;
+		};
+		3213CFB43089B2FE001F97E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 33PF7CDTHA;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.game.slotgametakehomeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = slotgametakehome;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3213CF7C3089B2FC001F97E3 /* Build configuration list for PBXProject "slotgametakehome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3213CFAD3089B2FE001F97E3 /* Debug */,
+				3213CFAE3089B2FE001F97E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3213CFAA3089B2FE001F97E3 /* Build configuration list for PBXNativeTarget "slotgametakehome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3213CFAB3089B2FE001F97E3 /* Debug */,
+				3213CFAC3089B2FE001F97E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3213CFAF3089B2FE001F97E3 /* Build configuration list for PBXNativeTarget "slotgametakehomeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3213CFB03089B2FE001F97E3 /* Debug */,
+				3213CFB13089B2FE001F97E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3213CFB23089B2FE001F97E3 /* Build configuration list for PBXNativeTarget "slotgametakehomeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3213CFB33089B2FE001F97E3 /* Debug */,
+				3213CFB43089B2FE001F97E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3213CF793089B2FC001F97E3 /* Project object */;
+}
