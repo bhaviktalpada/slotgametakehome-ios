@@ -1,176 +1,333 @@
-# Slot Game Take-Home - iOS (iPad Only)
+# Slot Game - iOS (iPad Only)
 
-A fully functional, arcade-style iOS slot machine game built exclusively for **iPad in landscape orientation**, designed to scale across all iPad screen sizes.
-
----
-
-## Highlights & Features Implemented
-
-### Core Features
-- **Full-Screen Arcade Experience**:
-  - The vintage marquee cabinet background (`reels-background-only`) fills the screen edge-to-edge across all iPad sizes without black letterbox borders.
-- **Alternating Column Spin Directions**:
-  - **Column 1**: Moves from **Top to Bottom** (downward)
-  - **Column 2**: Moves from **Bottom to Top** (upward)
-  - **Column 3**: Moves from **Top to Bottom** (downward)
-- **Soft Scrolling Speed & Deceleration**:
-  - Spins at high speed initially, then smoothly decelerates to low speed using a progressive cubic ease-out curve before an authentic mechanical spring settle into the final symbol.
-  - Realistic **staggered reel stops** (Reel 1 stops first, followed sequentially by Reel 2 and Reel 3) to build suspense.
-- **Development & Testing Environment (`DEV` / `PROD`)**:
-  - **Environment Toggle**: Switch between **Development Mode** (`DEV`) and **Production Mode** (`PROD`).
-  - **Predefined Outcome Selector**: When in Development mode, an interactive dropdown menu allows selecting predefined spin outcomes for testing:
-    - 🎲 **Random** (Standard game RNG)
-    - 🍒 **Cherry Win** (3x Cherry)
-    - 🍋 **Lemon Win** (3x Lemon)
-    - 7️⃣ **Seven Win** (3x Seven)
-    - 🔔 **Bell Win** (3x Bell)
-    - ⭐ **Star Win** (3x Star)
-    - 💎 **Diamond Win** (3x Diamond)
-    - ❌ **Guaranteed Loss**
-  - In **Production Mode**, test options are hidden.
-- **Payline Evaluation & Win Detection**:
-  - Evaluates matching 3-of-a-kind on the center payline.
-  - Full payout multiplier table:
-    - **Cherry 🍒**: 2x bet
-    - **Lemon 🍋**: 3x bet
-    - **Seven 7️⃣**: 5x bet
-    - **Bell 🔔**: 10x bet
-    - **Star ⭐**: 15x bet
-    - **Diamond 💎**: 25x bet (Jackpot)
-- **Lottie Win Celebration Animation**:
-  - Superimposes a dynamic **Lottie celebration animation** (`animation_win.json`) directly on top of the reels view whenever any winning combination is hit.
-  - Non-blocking (`isUserInteractionEnabled = false`) with graceful auto-fade upon completion or when a new spin begins.
-- **Credits, Score & Statistics Persistence (`StorePreference`)**:
-  - Stores player credits balance, highest win, total spins, and total winnings in `UserDefaults` via `StorePreference`.
-  - Persists state seamlessly across app launches and restarts.
-  - Starting balance of **100 credits** on fresh install.
-  - Bet selector for **1, 5, or 10 credits** via styled segmented control.
-  - Automatic balance deduction on spin and animated credit roll-up on winnings.
-  - Disables spin and alerts player with tactile/visual shake feedback if credits are insufficient.
-- **Audio & Sound Effects**:
-  - Plays `"spinning-sound.wav"` exactly **once per spin** via `SoundManager` (`numberOfLoops = 0`).
-  - Configured with `AVAudioSession` `.ambient` mode for background music compatibility.
-- **Properly Aligned Controls & UI Hierarchy**:
-  - Polished Auto Layout hierarchy ensuring the **SPIN** button and game statistics labels never overlap on any iPad screen size.
-- **Statistics Tracking**:
-  - Real-time display of **Total Spins**, **Biggest Win**, and **Total Won**.
+An arcade-style slot machine game built with Swift and UIKit exclusively for iPad in landscape orientation.
 
 ---
 
-## Configuration File (`GameConfig.swift`)
+## Overview & Approach
 
-All key game parameters, animation timings, audio filenames, and economy values are declared in `Models/GameConfig.swift` for easy customization:
+My goal for this project was to build a polished, tactile slot machine that feels like a physical arcade cabinet while keeping the codebase clean, modular, and easy to test.
 
-```swift
-enum GameConfig {
-    // MARK: - Audio Configuration
-    /// The sound file played during reel spinning.
-    static let soundFileName: String = "spinning-sound.wav"
+I followed standard **MVC architecture**:
 
-    // MARK: - Animation Timings (in seconds)
-    /// Base duration for the first reel to spin.
-    static let baseSpinDuration: TimeInterval = 2.8
-
-    /// Delay between consecutive reel stops (creates staggered mechanical stops).
-    static let reelStaggerDelay: TimeInterval = 0.35
-
-    /// Interval between symbol transitions during spinning.
-    static let spinStepInterval: TimeInterval = 0.05
-
-    /// Duration of the winning symbols pulse/celebration animation.
-    static let winAnimationDuration: TimeInterval = 0.7
-
-    /// Duration for result and status label spring transitions.
-    static let resultAnimationDuration: TimeInterval = 0.35
-
-    // MARK: - Game Economy
-    /// Initial balance of credits.
-    static let initialCredits: Int = 100
-
-    /// Available bet denominations.
-    static let betOptions: [Int] = [1, 5, 10]
-
-    /// Default selected bet amount.
-    static let defaultBet: Int = 1
-}
-```
+- **Models (`GameEngine`, `SlotSymbol`, `GameConfig`)**: Encapsulate the core game rules, payout calculations, probability weights, and session state. The engine has zero UI dependencies and is fully covered by unit tests.
+- **Views (`SlotReelView`)**: Custom view representing a 3-row vertical reel column. It handles directional scrolling transitions, deceleration physics, and the spring bounce settle.
+- **Controllers (`GameViewController`)**: Wires up the cabinet interface, user actions, animated credit roll-up, and Lottie win celebration overlays.
+- **Services (`StorePreference`, `SoundManager`)**: Clean singletons managing `UserDefaults` persistence and single-shot AVFoundation audio + haptic feedback.
 
 ---
 
-## iPad Landscape Orientation & Universal Multi-Size Support
+## Features
 
-The app is strictly built for **iPad in Landscape orientation**:
+### 1. iPad Landscape & Responsive Layout
 
-1. **Orientation Enforcement**:
-   - `TARGETED_DEVICE_FAMILY = 2` (iPad only).
-   - `UISupportedInterfaceOrientations~ipad`: `UIInterfaceOrientationLandscapeLeft`, `UIInterfaceOrientationLandscapeRight`.
-   - `AppDelegate` and `GameViewController` enforce `.landscape`.
-   - Removed fixed 1024x768 window restrictions in `SceneDelegate` to unlock native resolutions.
-2. **Dynamic Proportional Scaling**:
-   - The arcade marquee cabinet (`reels-background-only.png`) has a 1.5:1 aspect ratio.
-   - Centered inside `safeAreaLayoutGuide` with flexible priority-based constraints (`width <= 96% safeArea`, `height <= 93% safeArea`, maintaining `1536 / 1024` aspect ratio).
-   - Works seamlessly across all iPad models:
-     - **iPad mini** (8.3")
-     - **iPad 10.2" & 10.9"**
-     - **iPad Air 11" & 13"**
-     - **iPad Pro 11" & 12.9" / 13"**
+- Locked exclusively to landscape on iPad (`TARGETED_DEVICE_FAMILY = 2`, `requestGeometryUpdate`).
+- The vintage cabinet background fills edge-to-edge across all iPad sizes (iPad mini, 10.2", 10.9", Air, Pro 11"/13").
+- Content is anchored to layout guides set just inside the illuminated frame bulbs, so controls never overlap the cabinet graphics.
 
----
+### 2. Alternating Reel Directions
 
-## Architecture & Code Structure
+- **Reel 1**: Scrolls downward (top to bottom).
+- **Reel 2**: Scrolls upward (bottom to top).
+- **Reel 3**: Scrolls downward (top to bottom).
+- Implemented with Core Animation push transitions (`CATransition`) for crisp 60fps symbol shifting.
 
-Follows the classic **MVC (Model-View-Controller)** pattern with clean separation of concerns and human-written idiomatic Swift:
+### 3. Smooth Deceleration Physics
 
-```
-slotgametakehome/
-├── Models/
-│   ├── GameConfig.swift        - Centralized animation times, sound name, and economy config
-│   ├── SlotSymbol.swift        - Symbol enumeration, payouts, weights, and image loading
-│   └── GameEngine.swift        - Game state, credit management, win evaluation, testable spin logic
-├── Services/
-│   ├── StorePreference.swift   - UserDefaults persistence for player score, credits, and stats
-│   └── SoundManager.swift      - Audio session and single-shot sound effect playback, haptics
-├── Views/
-│   ├── SlotReelView.swift      - Custom reel column with soft deceleration physics & spring settle
-│   └── GameViewController.swift - Main game screen coordinating cabinet, reels, UI, and animations
-├── Assets.xcassets/             - Symbol PNGs, background marquee graphics, app icons
-├── Resoureces/
-│   └── spinning-sound.wav      - Audio asset bundled with target
-├── AppDelegate.swift           - Application lifecycle & orientation policy
-├── SceneDelegate.swift         - UIWindowScene lifecycle
-└── Info.plist                  - Target settings & landscape constraints
-```
+- The spin starts fast (0.04s per frame) for excitement, then follows a cubic ease-out slowdown in the second half.
+- Each reel stops sequentially (0.35s delay between reels) to build anticipation.
+- When stopping, each reel overshoots slightly in its scroll direction (+8pt down or -8pt up) and springs back via `UIView.animate(usingSpringWithDamping: 0.68)`.
+
+### 4. Game Economy & Win Logic
+
+- Starting balance of 100 credits.
+- Bet denominations of 1, 5, or 10 credits via custom segmented control.
+- Balance deducts immediately on spin and rolls up with an animated counter when winning.
+- Tapping SPIN with insufficient credits triggers a shake animation and warning.
+
+### 5. Lottie Celebration & Win Effects
+
+- Winning payline symbols glow gold with a pulsing scale animation.
+- A Lottie celebration overlay (`animation_win.json`) plays directly over the reels and auto-fades when finished or when the next spin begins.
+
+### 6. Development Mode & Test Result Picker
+
+- A small HUD in the top left toggles between **DEV** and **PROD** mode.
+- In **DEV** mode, a dropdown menu allows forcing specific outcomes (e.g. 3x Cherry, 3x Diamond Jackpot, Guaranteed Loss) for testing payouts and animations without relying on RNG.
+- In **PROD** mode, the test HUD is completely hidden.
+
+### 7. Sound, Haptics & Persistence
+
+- Single-shot spin audio (`spinning-sound.wav`) plays once per spin on an `.ambient` AVAudioSession so background music is not interrupted.
+- Mechanical haptics on button tap, reel stop clunk, and win success.
+- Credits, highest win, total spins, and last bet persist across launches using `UserDefaults` via `StorePreference`.
 
 ---
 
 ## Payout Table
 
-| Symbol | Matching Count | Multiplier | Rarity Weight |
-|:---:|:---:|:---:|:---:|
-| 🍒 Cherry | 3 | **2x Bet** | Common (30) |
-| 🍋 Lemon | 3 | **3x Bet** | Common (30) |
-| 7️⃣ Seven | 3 | **5x Bet** | Medium (20) |
-| 🔔 Bell | 3 | **10x Bet** | Medium (20) |
-| ⭐ Star | 3 | **15x Bet** | Rare (15) |
-| 💎 Diamond | 3 | **25x Bet** | Jackpot (5) |
+Matching 3 symbols on the center payline awards:
+
+| Symbol     | Multiplier | Payout (Bet 1) | Payout (Bet 5) | Payout (Bet 10) | Frequency      |
+| ---------- | ---------- | -------------- | -------------- | --------------- | -------------- |
+| 🍒 Cherry  | 2x         | 2              | 10             | 20              | Common (25%)   |
+| 🍋 Lemon   | 3x         | 3              | 15             | 30              | Common (25%)   |
+| 7️⃣ Seven   | 5x         | 5              | 25             | 50              | Medium (16.7%) |
+| 🔔 Bell    | 10x        | 10             | 50             | 100             | Medium (16.7%) |
+| ⭐ Star    | 15x        | 15             | 75             | 150             | Rare (12.5%)   |
+| 💎 Diamond | 25x        | 25             | 125            | 250             | Jackpot (4.2%) |
+
+---
+
+## Visual Assets & Centralized Theme Styling
+
+The app uses custom high-resolution artwork and a dedicated color theming system:
+
+### 1. Visual & Audio Assets
+
+- **Background (`slot-background`)**: High-resolution vintage arcade marquee sized for iPad landscape (1024x768 and scalable up to 13" iPad Pro).
+- **Reel Frames (`reel-frame`)**: Beveled metallic border frames housing the three vertical reels.
+- **Symbol Assets (300x300px)**:
+  - 🍒 `cherry` - Classic fruit symbol
+  - 🍋 `lemon` - Traditional citrus symbol
+  - 7️⃣ `seven` - Lucky slot number
+  - 🔔 `bell` - Classic mechanical slot bell
+  - ⭐ `star` - Premium celestial symbol
+  - 💎 `diamond` - Top-tier jackpot gemstone
+- **Audio Asset (`spinning-sound.wav`)**: Clean mechanical clicker sound played as a single-shot audio session on `.ambient` category.
+- **Celebration Asset (`animation_win.json`)**: Vector Lottie particle burst played over the reels on winning spins.
+
+### 2. Centralized Color Palette (`ThemeColor.swift`)
+
+All colors across the codebase are centralized in [ThemeColor.swift](file:///Users/Mackbook/Github/iOS/slotgametakehome-ios/slotgametakehome/Services/ThemeColor.swift) with optional, independent `alpha` parameter support:
+
+```swift
+ThemeColor.arcadeBackground(alpha:)     // Deep charcoal arcade backdrop
+ThemeColor.gold(alpha:)                 // Vibrant payout & border highlight
+ThemeColor.orangeGlow(alpha:)           // Warm marquee glow
+ThemeColor.reelBackground(alpha:)       // Inset reel column backing
+ThemeColor.reelBorder(alpha:)           // Mechanical reel separators
+ThemeColor.controlBackground(alpha:)    // Semi-translucent button backgrounds
+ThemeColor.devBackground(alpha:)        // QA HUD drawer backing
+ThemeColor.devBorder(alpha:)            // QA HUD outline
+ThemeColor.devBadgeGreen(alpha:)        // Active DEV status pill
+ThemeColor.prodBadgeGray(alpha:)        // Inactive PROD status pill
+ThemeColor.testButtonBackground(alpha:) // Dropdown menu selector button
+ThemeColor.winGreen(alpha:)             // Payout success banner
+ThemeColor.lossRed(alpha:)              // Balance depletion warning
+ThemeColor.statsText(alpha:)            // High-contrast HUD readout
+ThemeColor.disabledText(alpha:)         // Dimmed inactive labels
+```
+
+---
+
+## Project Structure
+
+```
+slotgametakehome/
+├── Models/
+│   ├── GameConfig.swift        // Global timings, sound name, and economy config
+│   ├── SlotSymbol.swift        // Symbols enum, multipliers, weights, and image loading
+│   └── GameEngine.swift        // Bet validation, spin logic, and win evaluation
+├── Services/
+│   ├── ThemeColor.swift        // Centralized color theme with configurable alpha
+│   ├── StorePreference.swift   // UserDefaults storage for score and stats
+│   └── SoundManager.swift      // Single-shot audio playback and haptics
+├── Views/
+│   ├── SlotReelView.swift      // Custom reel with alternating push and spring bounce
+│   └── GameViewController.swift // Main screen coordinating layout, spins, and overlays
+├── Assets.xcassets/            // PNG symbols and background marquee graphics
+├── Resoureces/
+│   ├── spinning-sound.wav      // Sound effect asset
+│   └── animation_win.json      // Lottie animation file
+├── AppDelegate.swift
+└── SceneDelegate.swift
+```
+
+---
+
+## Configuration File (`GameConfig.swift`)
+
+All core constants, audio asset names, animation durations, and environment controls are centralized in [GameConfig.swift](file:///Users/Mackbook/Github/iOS/slotgametakehome-ios/slotgametakehome/Models/GameConfig.swift):
+
+```swift
+enum GameConfig {
+    // Environment Mode: .development exposes QA Test HUD; .production hides it
+    static var environment: AppEnvironment = .development
+    static var selectedTestOption: PredefinedSpinOption = .random
+
+    // Sound file name in bundle
+    static let soundFileName = "spinning-sound.wav"
+
+    // Animation & Reel Timings (in seconds)
+    static var baseSpinDuration: TimeInterval = 2.8      // Duration of Reel 1
+    static let reelStaggerDelay: TimeInterval = 0.35     // Delay before subsequent reels stop
+    static let spinStepInterval: TimeInterval = 0.04     // Symbol transition interval at top speed
+    static let winAnimationDuration: TimeInterval = 0.7  // Win highlight pulse duration
+    static let resultAnimationDuration: TimeInterval = 0.35 // Win/loss popup spring duration
+
+    // Game Economy
+    static let initialCredits: Int = 100                 // Starting player balance
+    static let betOptions: [Int] = [1, 5, 10]            // Available bet amounts
+    static let defaultBet: Int = 1                       // Initial bet
+}
+```
+
+### Parameter Breakdown:
+
+- **`environment` & `selectedTestOption`**: Toggles between DEV (shows the test picker HUD to force specific combinations) and PROD (standard player experience).
+- **`soundFileName`**: Bundle name for single-shot spinning audio (`spinning-sound.wav`).
+- **`baseSpinDuration` (2.8s)**: Total spinning time for the first reel before it initiates its spring settle.
+- **`reelStaggerDelay` (0.35s)**: Incremental stop delay per subsequent reel column (Reel 1: 2.80s, Reel 2: 3.15s, Reel 3: 3.50s) to build mechanical suspense.
+- **`spinStepInterval` (0.04s)**: High-speed symbol transition interval during continuous spin.
+- **`initialCredits` (100)** & **`betOptions` ([1, 5, 10])**: Default wallet balance and selectable stakes.
+
+---
+
+## Spin Execution & Result Calculation Logic
+
+The lifecycle of each spin flows through four coordinated stages across the codebase:
+
+```
+[User Taps SPIN]
+       │
+       ▼
+GameViewController.spinTapped()
+       │
+       ▼
+GameEngine.spin(forcedSymbols:)
+       ├─► Deducts currentBet from credits
+       ├─► Rolls 3 symbols via SlotSymbol.randomWeighted() (or uses DEV forced outcome)
+       ├─► Evaluates 3-of-a-kind payline via GameEngine.evaluateWin()
+       ├─► Calculates winAmount = bet * payout
+       └─► Persists state via StorePreference.shared.saveGameState()
+       │
+       ▼
+SlotReelView.spin(to:duration:completion:)
+       ├─► Dispatches staggered spins (Reel 1: 2.8s, Reel 2: 3.15s, Reel 3: 3.50s)
+       ├─► Applies alternating push directions: Reel 0 (down), Reel 1 (up), Reel 2 (down)
+       ├─► Decelerates with cubic ease-out curve in the final 45% of spin
+       └─► Overshoots (+/-8pt) and snaps back via spring bounce animation
+       │
+       ▼
+GameViewController.handleAllReelsStopped()
+       ├─► If WIN: triggers haptic, pulses gold border, plays Lottie celebration, rolls up credits
+       └─► If LOSS: displays try again notice, re-enables controls
+```
+
+### 1. User Taps Spin
+
+- **Class**: `GameViewController`
+- **Method**: `@objc private func spinTapped()`
+- **Responsibilities**:
+  1. Calls `gameEngine.canSpin()` to verify `credits >= currentBet`. If insufficient, triggers `showInsufficientCreditsNotice()` with an error shake on the credits counter.
+  2. Sets `isSpinning = true`, disables the SPIN button (alpha dimmed to 0.45), and disables the bet segmented control to prevent concurrent spins.
+  3. Plays single-shot audio via `SoundManager.shared.playSpinSound()` and fires haptic feedback via `SoundManager.shared.playSpinStartFeedback()`.
+  4. Reads `GameConfig.selectedTestOption.forcedSymbols` (if in DEV mode) or passes `nil` for organic RNG.
+  5. Calls `gameEngine.spin(forcedSymbols:)` to compute the outcome immediately.
+  6. Updates the credits display to reflect the deducted wager upfront: `creditsAfterBet = credits - (isWin ? winAmount : 0)`.
+  7. Dispatches staggered spin animations to each of the 3 `SlotReelView` columns.
+
+### 2. Result & Payout Calculation
+
+- **Class**: `GameEngine`
+- **Methods**: `spin(forcedSymbols:)` and `evaluateWin(_:)`
+- **Calculations**:
+  1. **Deduct Wager**:
+     ```swift
+     state.credits -= state.currentBet
+     state.totalSpins += 1
+     ```
+  2. **Roll Symbols**:
+     - In DEV mode with a selected test case: uses the pre-selected symbols.
+     - In standard mode: rolls 3 symbols independently via `SlotSymbol.randomWeighted()`.
+  3. **Weighted RNG Roll (`SlotSymbol.randomWeighted()` in `SlotSymbol.swift`)**:
+     Symbols have probability weights (Cherry: 30, Lemon: 30, Seven: 20, Bell: 20, Star: 15, Diamond: 5). Total weight = 120.
+     The algorithm rolls `Int.random(in: 1...totalWeight)` and traverses cumulative weight bounds:
+     - 🍒 Cherry: ~25.0%
+     - 🍋 Lemon: ~25.0%
+     - 7️⃣ Seven: ~16.7%
+     - 🔔 Bell: ~16.7%
+     - ⭐ Star: ~12.5%
+     - 💎 Diamond: ~4.2%
+  4. **Payline Evaluation (`evaluateWin(_:)`)**:
+     Tests whether all three symbols on the center row match:
+     ```swift
+     if symbols[0] == symbols[1] && symbols[1] == symbols[2] {
+         return (true, symbols[0].payout)
+     }
+     return (false, 0)
+     ```
+  5. **Win Amount & Multiplier**:
+     $$\text{winAmount} = \begin{cases} \text{currentBet} \times \text{payoutMultiplier} & \text{if } 3\text{ matching symbols} \\ 0 & \text{otherwise} \end{cases}$$
+     - 🍒 Cherry: 2x bet
+     - 🍋 Lemon: 3x bet
+     - 7️⃣ Seven: 5x bet
+     - 🔔 Bell: 10x bet
+     - ⭐ Star: 15x bet
+     - 💎 Diamond: 25x bet (Jackpot)
+  6. **Wallet & Statistics Update**:
+     If `isWin == true`, adds `winAmount` back to `state.credits`, increments `totalWinnings`, and updates `biggestWin` if higher.
+  7. **Persistence**:
+     Saves the state immediately to `UserDefaults` using `StorePreference.shared.saveGameState(state)`.
+
+### 3. Reel Animation & Physics
+
+- **Class**: `SlotReelView`
+- **Methods**: `spin(to:duration:completion:)`, `scheduleNextStep(token:)`, and `stopSpinAndSettle()`
+- **Mechanics**:
+  1. **Alternating Directions**: Reel 0 moves downward (`.topToBottom`), Reel 1 moves upward (`.bottomToTop`), Reel 2 moves downward (`.topToBottom`) using `CATransition` of type `.push`.
+  2. **Deceleration Curve (`scheduleNextStep`)**:
+     - _Phase 1 ($0.0 \le \text{progress} < 0.55$)_: Top speed at `0.04s` per symbol push.
+     - _Phase 2 ($0.55 \le \text{progress} < 1.00$)_: Cubic ease-out slowdown:
+       $$\Delta t = 0.04 + (\text{ease}^3 \times 0.18)$$
+       Stretching frame intervals smoothly up to ~0.22s.
+     - The target winning/losing symbol is pushed into the center frame at `progress > 0.88`.
+  3. **Spring Bounce Overshoot (`stopSpinAndSettle`)**:
+     Displaces the symbol container by `+8pt` (down) or `-8pt` (up) and springs back to `0` via `UIView.animate(usingSpringWithDamping: 0.68, initialSpringVelocity: 0.7)` while triggering mechanical stop haptics.
+
+### 4. Reel Stop Completion & Win Resolution
+
+- **Class**: `GameViewController`
+- **Methods**: `handleAllReelsStopped(result:previousCredits:)`, `handleWin(result:fromCredits:)`, `handleLoss()`, and `animateCreditRollUp(from:to:)`
+- **Flow**:
+  1. When the third reel finishes its spring settle, `handleAllReelsStopped` stops the audio loop and re-enables bet adjustments.
+  2. **If Win (`handleWin`)**:
+     - Fires celebration haptic (`SoundManager.shared.playWinFeedback()`).
+     - Highlights winning reel borders with a golden pulse (`reel.highlightWin()`).
+     - Plays the Lottie confetti celebration (`animation_win.json`) centered over the reels (`playWinLottieAnimation()`).
+     - Displays `WIN! +X CREDITS` (or `JACKPOT!` for 3x Star or Diamond) with spring scale animation.
+     - Smoothly rolls up the credits label in 15 increments from deducted balance to winning total (`animateCreditRollUp`).
+  3. **If Loss (`handleLoss`)**:
+     - Displays a gentle "TRY AGAIN" spring message.
+  4. Checks `gameEngine.canSpin()` to restore SPIN button state.
+
+---
+
+## Assumptions Made
+
+1. **Target Device**: iPad landscape only, as specified in the take-home requirements. The UI scales proportionally to look great on both smaller iPads (mini) and larger 13" iPad Pro models.
+2. **Payline**: Traditional center-row 3-of-a-kind payline.
+3. **Audio**: Ambient category so users listening to music or podcasts don't get interrupted.
 
 ---
 
 ## How to Run & Test
 
 ### Running the App
-1. Open `slotgametakehome.xcodeproj` in Xcode.
-2. Select any iPad simulator in the run destination (e.g., *iPad (A16)*, *iPad Pro 11-inch*, or *iPad Pro 13-inch*).
-3. Build and Run (**⌘R**). The app will automatically launch in landscape mode.
+
+1. Open `slotgametakehome.xcodeproj` in Xcode 15+.
+2. Choose any iPad simulator (e.g. _iPad (A16)_, _iPad Pro 11-inch_).
+3. Press **⌘R** to run.
 
 ### Running Unit Tests
-- In Xcode, press **⌘U**, or run from terminal:
-  ```bash
-  xcodebuild test -project slotgametakehome.xcodeproj -scheme slotgametakehome -destination 'platform=iOS Simulator,name=iPad (A16)'
-  ```
-- Unit tests cover:
-  - Configuration verification (`GameConfig.soundFileName`, animation times)
-  - Balance and bet validation
-  - Win calculations and payouts for every symbol
-  - Edge cases (insufficient credits prevention)
-  - Game statistics tracking and state reset
+
+Press **⌘U** in Xcode, or run from terminal:
+
+```bash
+xcodebuild test -project slotgametakehome.xcodeproj -scheme slotgametakehome -destination 'platform=iOS Simulator,name=iPad (A16)' -only-testing:slotgametakehomeTests
+```
+
+The test suite includes 20 unit tests covering `GameEngine` calculations, all payout multipliers, bet restrictions, state resets, `StorePreference` persistence, and configuration validation.
+
+---

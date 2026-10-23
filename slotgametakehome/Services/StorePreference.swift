@@ -3,23 +3,17 @@
 //  slotgametakehome
 //
 //  Created by Developer on 22/10/26.
+//
 
 import Foundation
 
-/// Manages persistent storage of player scores, credits balance, last bet, and game statistics using `UserDefaults`.
-/// Guarantees that player progress, high scores, and session history survive app restarts and launches.
+// Handles persisting player credits and session stats to UserDefaults
 final class StorePreference {
 
-    // MARK: - Singleton Instance
-    /// Shared singleton instance for convenient application-wide access.
     static let shared = StorePreference()
 
-    // MARK: - Dependencies
-    /// The underlying `UserDefaults` backing store.
     private let userDefaults: UserDefaults
 
-    // MARK: - Storage Keys
-    /// Dedicated key constants organized in a private namespace to prevent key collisions.
     private enum Keys {
         static let credits = "slot_game_credits"
         static let biggestWin = "slot_game_biggest_win"
@@ -29,30 +23,17 @@ final class StorePreference {
         static let hasSavedData = "slot_game_has_saved_data"
     }
 
-    // MARK: - Initialization
-
-    /// Initializes the persistence manager with a specified `UserDefaults` suite (defaults to `.standard`).
-    /// - Parameter userDefaults: Target UserDefaults instance (injected for unit testing).
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
     }
 
-    // MARK: - Saved State Indicator
-
-    /// Returns true if valid game data has previously been saved to storage.
     var hasSavedData: Bool {
-        return userDefaults.bool(forKey: Keys.hasSavedData)
+        userDefaults.bool(forKey: Keys.hasSavedData)
     }
 
-    // MARK: - Score & Balance Properties
-
-    /// Persisted player credit balance. Returns `GameConfig.initialCredits` if no save exists yet.
     var credits: Int {
         get {
-            if hasSavedData {
-                return userDefaults.integer(forKey: Keys.credits)
-            }
-            return GameConfig.initialCredits
+            hasSavedData ? userDefaults.integer(forKey: Keys.credits) : GameConfig.initialCredits
         }
         set {
             userDefaults.set(newValue, forKey: Keys.credits)
@@ -60,34 +41,30 @@ final class StorePreference {
         }
     }
 
-    /// Highest single win payout achieved across all spins.
     var biggestWin: Int {
-        get { return userDefaults.integer(forKey: Keys.biggestWin) }
+        get { userDefaults.integer(forKey: Keys.biggestWin) }
         set {
             userDefaults.set(newValue, forKey: Keys.biggestWin)
             userDefaults.set(true, forKey: Keys.hasSavedData)
         }
     }
 
-    /// Total count of completed spins in this installation.
     var totalSpins: Int {
-        get { return userDefaults.integer(forKey: Keys.totalSpins) }
+        get { userDefaults.integer(forKey: Keys.totalSpins) }
         set {
             userDefaults.set(newValue, forKey: Keys.totalSpins)
             userDefaults.set(true, forKey: Keys.hasSavedData)
         }
     }
 
-    /// Cumulative total credits won across all winning spins.
     var totalWinnings: Int {
-        get { return userDefaults.integer(forKey: Keys.totalWinnings) }
+        get { userDefaults.integer(forKey: Keys.totalWinnings) }
         set {
             userDefaults.set(newValue, forKey: Keys.totalWinnings)
             userDefaults.set(true, forKey: Keys.hasSavedData)
         }
     }
 
-    /// Last selected bet denomination (defaults to `GameConfig.defaultBet` if unset).
     var lastBet: Int {
         get {
             let saved = userDefaults.integer(forKey: Keys.lastBet)
@@ -99,10 +76,6 @@ final class StorePreference {
         }
     }
 
-    // MARK: - GameState Operations Process
-
-    /// Saves the complete game state (credits, last bet, statistics) to `UserDefaults`.
-    /// - Parameter state: The active `GameState` struct to persist.
     func saveGameState(_ state: GameState) {
         credits = state.credits
         biggestWin = state.biggestWin
@@ -112,9 +85,6 @@ final class StorePreference {
         userDefaults.set(true, forKey: Keys.hasSavedData)
     }
 
-    /// Loads the stored game state from `UserDefaults`.
-    /// If no previous save exists, returns an initialized `GameState` with defaults from `GameConfig`.
-    /// - Returns: Restored or initial `GameState`.
     func loadGameState() -> GameState {
         guard hasSavedData else {
             return GameState(
@@ -135,13 +105,9 @@ final class StorePreference {
         )
     }
 
-    /// Clears all stored keys and removes saved data, resetting storage back to fresh installation state.
     func reset() {
-        userDefaults.removeObject(forKey: Keys.credits)
-        userDefaults.removeObject(forKey: Keys.biggestWin)
-        userDefaults.removeObject(forKey: Keys.totalSpins)
-        userDefaults.removeObject(forKey: Keys.totalWinnings)
-        userDefaults.removeObject(forKey: Keys.lastBet)
-        userDefaults.removeObject(forKey: Keys.hasSavedData)
+        [Keys.credits, Keys.biggestWin, Keys.totalSpins, Keys.totalWinnings, Keys.lastBet, Keys.hasSavedData].forEach {
+            userDefaults.removeObject(forKey: $0)
+        }
     }
 }

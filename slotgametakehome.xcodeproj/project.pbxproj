@@ -40,8 +40,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				README.md,
 				Resoureces/animation_win.json,
-				Resoureces/README.md,
 			);
 			target = 3213CF803089B2FC001F97E3 /* slotgametakehome */;
 		};
