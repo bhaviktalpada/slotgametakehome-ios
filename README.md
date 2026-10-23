@@ -328,6 +328,30 @@ Press **⌘U** in Xcode, or run from terminal:
 xcodebuild test -project slotgametakehome.xcodeproj -scheme slotgametakehome -destination 'platform=iOS Simulator,name=iPad (A16)' -only-testing:slotgametakehomeTests
 ```
 
-The test suite includes 20 unit tests covering `GameEngine` calculations, all payout multipliers, bet restrictions, state resets, `StorePreference` persistence, and configuration validation.
+The unit test suite includes **25 unit tests** covering:
+- `GameConfig` timings, sound asset verification, and Lottie JSON presence
+- `StorePreference` defaults, custom state persistence, and resets
+- `GameEngine` initial state, bet deduction, and lifetime statistics tracking
+- Bet boundary and options validation (`GameConfig.betOptions`)
+- All winning combinations and payout multipliers (🍒 Cherry 2x, 🍋 Lemon 3x, 7️⃣ Seven 5x, 🔔 Bell 10x, ⭐ Star 15x, 💎 Diamond 25x)
+- Non-matching loss combinations and insufficient credits guard
+- `SlotSymbol` probability weights and random weighted distribution
+- `ThemeColor` dynamic alpha generation
+
+### Running XCUI Automation Tests
+
+Run from Xcode's Test Navigator or from terminal:
+
+```bash
+xcodebuild test -project slotgametakehome.xcodeproj -scheme slotgametakehome -destination 'platform=iOS Simulator,name=iPad (A16)' -only-testing:slotgametakehomeUITests/slotgametakehomeUITests -parallel-testing-enabled NO
+```
+
+The UI test suite includes **5 automated interaction tests**:
+1. `testInitialGameScreenElements`: Verifies title, credits counter, segmented bet selector, reels container, and enabled SPIN button on launch.
+2. `testBetSelectorChanges`: Verifies switching bets between 1, 5, and 10 updates the selected segment.
+3. `testSpinCycleUpdatesStateAndReEnablesButton`: Taps SPIN, waits for reels to settle, verifies button re-enables and session statistics increment.
+4. `testEnvironmentBadgeToggle`: Toggles DEV/PROD modes, asserting the QA test button is visible in DEV and hidden in PROD.
+5. `testForcedOutcomeCherryWinFlow`: Uses the DEV test picker to select 3x Cherry, triggers a spin, and verifies the winning banner appears and credits increase.
 
 ---
+

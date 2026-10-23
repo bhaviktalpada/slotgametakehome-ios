@@ -54,6 +54,7 @@ final class GameEngine {
     }
 
     func setBet(_ bet: Int) { // Update latest bet count in preferences
+        guard GameConfig.betOptions.contains(bet) else { return }
         state.currentBet = bet
         preferences.saveGameState(state)
     }

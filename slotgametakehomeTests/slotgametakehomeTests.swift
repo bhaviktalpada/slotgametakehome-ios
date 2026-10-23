@@ -239,4 +239,73 @@ final class slotgametakehomeTests: XCTestCase {
         XCTAssertEqual(state.biggestWin, 0)
         XCTAssertEqual(state.totalWinnings, 0)
     }
+
+    // MARK: - Symbol & Weight Validation Tests
+
+    func testSlotSymbolProperties() {
+        XCTAssertEqual(SlotSymbol.allCases.count, 6)
+
+        for symbol in SlotSymbol.allCases {
+            XCTAssertGreaterThan(symbol.payout, 0, "\(symbol) must award a positive payout multiplier")
+            XCTAssertGreaterThan(symbol.weight, 0, "\(symbol) must have a non-zero probability weight")
+            XCTAssertFalse(symbol.imageName.isEmpty, "\(symbol) must define an image asset name")
+        }
+
+        // Verify jackpot is highest multiplier
+        XCTAssertEqual(SlotSymbol.diamond.payout, 25)
+        XCTAssertEqual(SlotSymbol.star.payout, 15)
+    }
+
+    func testRandomWeightedGeneratesValidSymbols() {
+        var observedSymbols = Set<SlotSymbol>()
+        for _ in 0..<100 {
+            let symbol = SlotSymbol.randomWeighted()
+            observedSymbols.insert(symbol)
+        }
+        XCTAssertFalse(observedSymbols.isEmpty)
+    }
+
+    // MARK: - Predefined Spin Option Tests
+
+    func testAllPredefinedSpinOptions() {
+        XCTAssertNil(PredefinedSpinOption.random.forcedSymbols)
+        XCTAssertEqual(PredefinedSpinOption.cherry.forcedSymbols, [.cherry, .cherry, .cherry])
+        XCTAssertEqual(PredefinedSpinOption.lemon.forcedSymbols, [.lemon, .lemon, .lemon])
+        XCTAssertEqual(PredefinedSpinOption.seven.forcedSymbols, [.seven, .seven, .seven])
+        XCTAssertEqual(PredefinedSpinOption.bell.forcedSymbols, [.bell, .bell, .bell])
+        XCTAssertEqual(PredefinedSpinOption.star.forcedSymbols, [.star, .star, .star])
+        XCTAssertEqual(PredefinedSpinOption.diamond.forcedSymbols, [.diamond, .diamond, .diamond])
+        XCTAssertEqual(PredefinedSpinOption.loss.forcedSymbols, [.cherry, .lemon, .seven])
+    }
+
+    // MARK: - Theme Color Tests
+
+    func testThemeColorDynamicAlpha() {
+        let fullGold = ThemeColor.gold()
+        let halfGold = ThemeColor.gold(alpha: 0.5)
+
+        var fullAlpha: CGFloat = 0
+        fullGold.getWhite(nil, alpha: &fullAlpha)
+
+        var customAlpha: CGFloat = 0
+        halfGold.getWhite(nil, alpha: &customAlpha)
+
+        XCTAssertEqual(fullAlpha, 1.0, accuracy: 0.05)
+        XCTAssertEqual(customAlpha, 0.5, accuracy: 0.05)
+    }
+
+    // MARK: - Bet Validation Tests
+
+    func testInvalidBetIgnored() {
+        engine.setBet(5)
+        XCTAssertEqual(engine.currentState.currentBet, 5)
+
+        // Invalid bets outside GameConfig.betOptions should be ignored
+        engine.setBet(99)
+        XCTAssertEqual(engine.currentState.currentBet, 5)
+
+        engine.setBet(-1)
+        XCTAssertEqual(engine.currentState.currentBet, 5)
+    }
 }
+

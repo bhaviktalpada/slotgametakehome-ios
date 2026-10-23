@@ -95,6 +95,7 @@ class GameViewController: UIViewController {
         titleLabel.layer.shadowOffset = CGSize(width: 0, height: 2)
         titleLabel.layer.shadowOpacity = 0.85
         titleLabel.layer.shadowRadius = 6
+        titleLabel.accessibilityIdentifier = "titleLabel"
         innerPlayArea.addSubview(titleLabel)
     }
 
@@ -106,6 +107,7 @@ class GameViewController: UIViewController {
         creditsLabel.layer.shadowOffset = CGSize(width: 0, height: 2)
         creditsLabel.layer.shadowOpacity = 0.7
         creditsLabel.layer.shadowRadius = 3
+        creditsLabel.accessibilityIdentifier = "creditsLabel"
         innerPlayArea.addSubview(creditsLabel)
 
         betLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -115,6 +117,7 @@ class GameViewController: UIViewController {
         innerPlayArea.addSubview(betLabel)
 
         betSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        betSegmentedControl.accessibilityIdentifier = "betSegmentedControl"
         betSegmentedControl.selectedSegmentIndex = 0
         betSegmentedControl.backgroundColor = ThemeColor.controlBackground(alpha: 0.90)
         betSegmentedControl.selectedSegmentTintColor = ThemeColor.gold()
@@ -135,6 +138,7 @@ class GameViewController: UIViewController {
 
     private func setupReels() {
         reelsContainerView.translatesAutoresizingMaskIntoConstraints = false
+        reelsContainerView.accessibilityIdentifier = "reelsContainerView"
         innerPlayArea.addSubview(reelsContainerView)
 
         // Alternating directions: Reel 1 down, Reel 2 up, Reel 3 down
@@ -144,6 +148,7 @@ class GameViewController: UIViewController {
             let reel = SlotReelView()
             reel.translatesAutoresizingMaskIntoConstraints = false
             reel.spinDirection = directions[i]
+            reel.accessibilityIdentifier = "reel_\(i)"
             reelsContainerView.addSubview(reel)
             reels.append(reel)
         }
@@ -181,12 +186,14 @@ class GameViewController: UIViewController {
         resultLabel.textColor = ThemeColor.gold()
         resultLabel.textAlignment = .center
         resultLabel.alpha = 0
+        resultLabel.accessibilityIdentifier = "resultLabel"
         innerPlayArea.addSubview(resultLabel)
 
         statsLabel.translatesAutoresizingMaskIntoConstraints = false
         statsLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         statsLabel.textColor = ThemeColor.statsText(alpha: 0.9)
         statsLabel.textAlignment = .center
+        statsLabel.accessibilityIdentifier = "statsLabel"
         innerPlayArea.addSubview(statsLabel)
 
         spinButton.translatesAutoresizingMaskIntoConstraints = false
@@ -200,6 +207,7 @@ class GameViewController: UIViewController {
         spinButton.layer.shadowOffset = CGSize(width: 0, height: 4)
         spinButton.layer.shadowOpacity = 0.8
         spinButton.layer.shadowRadius = 8
+        spinButton.accessibilityIdentifier = "spinButton"
 
         spinButton.addTarget(self, action: #selector(spinTouchDown), for: .touchDown)
         spinButton.addTarget(self, action: #selector(spinTouchUp), for: [.touchUpInside, .touchUpOutside, .touchCancel])
@@ -220,6 +228,7 @@ class GameViewController: UIViewController {
         envBadgeButton.backgroundColor = ThemeColor.devBadgeGreen(alpha: 0.95)
         envBadgeButton.layer.cornerRadius = 5
         envBadgeButton.contentEdgeInsets = UIEdgeInsets(top: 3, left: 7, bottom: 3, right: 7)
+        envBadgeButton.accessibilityIdentifier = "envBadgeButton"
         envBadgeButton.addTarget(self, action: #selector(toggleEnvironment), for: .touchUpInside)
         devContainerView.addSubview(envBadgeButton)
 
@@ -229,6 +238,7 @@ class GameViewController: UIViewController {
         testResultButton.backgroundColor = ThemeColor.testButtonBackground(alpha: 0.7)
         testResultButton.layer.cornerRadius = 5
         testResultButton.contentEdgeInsets = UIEdgeInsets(top: 3, left: 8, bottom: 3, right: 8)
+        testResultButton.accessibilityIdentifier = "testResultButton"
         testResultButton.showsMenuAsPrimaryAction = true
         devContainerView.addSubview(testResultButton)
 
