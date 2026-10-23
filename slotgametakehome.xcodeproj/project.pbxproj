@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		32C912A0308B4C5D009B1FF8 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 32C9129F308B4C5D009B1FF8 /* Lottie */; };
+		32C912B1308B5000009B1FF8 /* animation_win.json in Resources */ = {isa = PBXBuildFile; fileRef = 32C912B0308B5000009B1FF8 /* animation_win.json */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		3213CF983089B2FE001F97E3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,7 @@
 		3213CF813089B2FC001F97E3 /* slotgametakehome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = slotgametakehome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3213CF973089B2FE001F97E3 /* slotgametakehomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slotgametakehomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3213CFA13089B2FE001F97E3 /* slotgametakehomeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = slotgametakehomeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		32C912B0308B5000009B1FF8 /* animation_win.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = animation_win.json; path = slotgametakehome/Resoureces/animation_win.json; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -34,6 +40,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Resoureces/animation_win.json,
+				Resoureces/README.md,
 			);
 			target = 3213CF803089B2FC001F97E3 /* slotgametakehome */;
 		};
@@ -81,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32C912A0308B4C5D009B1FF8 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +117,7 @@
 				3213CF9A3089B2FE001F97E3 /* slotgametakehomeTests */,
 				3213CFA43089B2FE001F97E3 /* slotgametakehomeUITests */,
 				3213CF823089B2FC001F97E3 /* Products */,
+				32C912B0308B5000009B1FF8 /* animation_win.json */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +151,7 @@
 			);
 			name = slotgametakehome;
 			packageProductDependencies = (
+				32C9129F308B4C5D009B1FF8 /* Lottie */,
 			);
 			productName = slotgametakehome;
 			productReference = 3213CF813089B2FC001F97E3 /* slotgametakehome.app */;
@@ -224,6 +235,9 @@
 			);
 			mainGroup = 3213CF783089B2FC001F97E3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				32C9129E308B4C5D009B1FF8 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3213CF823089B2FC001F97E3 /* Products */;
 			projectDirPath = "";
@@ -241,6 +255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32C912B1308B5000009B1FF8 /* animation_win.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +323,7 @@
 				DEVELOPMENT_TEAM = 33PF7CDTHA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = slotgametakehome/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Slot Game";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -328,7 +344,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -342,6 +358,7 @@
 				DEVELOPMENT_TEAM = 33PF7CDTHA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = slotgametakehome/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Slot Game";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -362,7 +379,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -611,6 +628,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		32C9129E308B4C5D009B1FF8 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		32C9129F308B4C5D009B1FF8 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 32C9129E308B4C5D009B1FF8 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3213CF793089B2FC001F97E3 /* Project object */;
 }

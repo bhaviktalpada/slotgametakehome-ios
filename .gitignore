@@ -71,3 +71,5 @@ Pods/*
 Podfile.lock
 ArborPro.xcodeproj/project.pbxproj
 ArborPro.xcworkspace
+.*_orig/
+Configuration/

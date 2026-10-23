@@ -1,38 +1,242 @@
+
 //
 //  slotgametakehomeTests.swift
-//  slotgametakehomeTests
+//  slotgametakehome
 //
 //  Created by Developer on 22/10/26.
-//
 
 import XCTest
 @testable import slotgametakehome
 
 final class slotgametakehomeTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var engine: GameEngine!
+    var testDefaults: UserDefaults!
+    var testPreferences: StorePreference!
+
+    override func setUp() {
+        super.setUp()
+        testDefaults = UserDefaults(suiteName: "slotgametakehome.tests")!
+        testDefaults.removePersistentDomain(forName: "slotgametakehome.tests")
+        testPreferences = StorePreference(userDefaults: testDefaults)
+        engine = GameEngine(preferences: testPreferences)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func tearDown() {
+        engine = nil
+        testDefaults.removePersistentDomain(forName: "slotgametakehome.tests")
+        testDefaults = nil
+        testPreferences = nil
+        super.tearDown()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
+    // MARK: - GameConfig Tests
+
+    func testGameConfigSoundFileName() {
+        XCTAssertEqual(GameConfig.soundFileName, "spinning-sound.wav")
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testGameConfigAnimationTimings() {
+        XCTAssertGreaterThan(GameConfig.baseSpinDuration, 0)
+        XCTAssertGreaterThan(GameConfig.reelStaggerDelay, 0)
+        XCTAssertGreaterThan(GameConfig.spinStepInterval, 0)
+        XCTAssertGreaterThan(GameConfig.winAnimationDuration, 0)
+        XCTAssertGreaterThan(GameConfig.resultAnimationDuration, 0)
+    }
+
+    func testWinAnimationFileExists() {
+        let bundle = Bundle(for: GameViewController.self)
+        let animationURL = bundle.url(forResource: "animation_win", withExtension: "json")
+        XCTAssertNotNil(animationURL, "animation_win.json should be present in the bundle")
+    }
+
+    // MARK: - StorePreference Tests
+
+    func testStorePreferenceDefaults() {
+        XCTAssertFalse(testPreferences.hasSavedData)
+        XCTAssertEqual(testPreferences.credits, GameConfig.initialCredits)
+        XCTAssertEqual(testPreferences.lastBet, GameConfig.defaultBet)
+        XCTAssertEqual(testPreferences.totalSpins, 0)
+        XCTAssertEqual(testPreferences.biggestWin, 0)
+        XCTAssertEqual(testPreferences.totalWinnings, 0)
+    }
+
+    func testStorePreferenceSaveAndLoad() {
+        testPreferences.credits = 250
+        testPreferences.lastBet = 10
+        testPreferences.totalSpins = 12
+        testPreferences.biggestWin = 50
+        testPreferences.totalWinnings = 140
+
+        XCTAssertTrue(testPreferences.hasSavedData)
+
+        let loadedState = testPreferences.loadGameState()
+        XCTAssertEqual(loadedState.credits, 250)
+        XCTAssertEqual(loadedState.currentBet, 10)
+        XCTAssertEqual(loadedState.totalSpins, 12)
+        XCTAssertEqual(loadedState.biggestWin, 50)
+        XCTAssertEqual(loadedState.totalWinnings, 140)
+    }
+
+    func testStorePreferenceReset() {
+        testPreferences.credits = 500
+        testPreferences.reset()
+
+        XCTAssertFalse(testPreferences.hasSavedData)
+        XCTAssertEqual(testPreferences.credits, GameConfig.initialCredits)
+    }
+
+    func testGameEnginePersistsScoreAcrossInstances() {
+        engine.setBet(5)
+        _ = engine.spin(forcedSymbols: [.bell, .bell, .bell]) // 5 * 10 = +50 win
+
+        let savedCredits = engine.currentState.credits
+        let savedSpins = engine.currentState.totalSpins
+
+        // Create a new engine instance using the same preferences
+        let newEngine = GameEngine(preferences: testPreferences)
+        XCTAssertEqual(newEngine.currentState.credits, savedCredits)
+        XCTAssertEqual(newEngine.currentState.totalSpins, savedSpins)
+        XCTAssertEqual(newEngine.currentState.currentBet, 5)
+    }
+
+    // MARK: - Initial State Tests
+
+    func testInitialGameState() {
+        let state = engine.currentState
+        XCTAssertEqual(state.credits, GameConfig.initialCredits)
+        XCTAssertEqual(state.currentBet, GameConfig.defaultBet)
+        XCTAssertEqual(state.totalSpins, 0)
+        XCTAssertEqual(state.biggestWin, 0)
+        XCTAssertEqual(state.totalWinnings, 0)
+        XCTAssertTrue(engine.canSpin())
+    }
+
+    // MARK: - Bet Selection Tests
+
+    func testSetBet() {
+        engine.setBet(5)
+        XCTAssertEqual(engine.currentState.currentBet, 5)
+
+        engine.setBet(10)
+        XCTAssertEqual(engine.currentState.currentBet, 10)
+
+        engine.setBet(1)
+        XCTAssertEqual(engine.currentState.currentBet, 1)
+    }
+
+    // MARK: - Spin and Balance Management Tests
+
+    func testSpinDeductsBet() {
+        engine.setBet(5)
+        let initialCredits = engine.currentState.credits
+        let result = engine.spin(forcedSymbols: [.cherry, .lemon, .bell]) // Guarantees loss
+
+        XCTAssertFalse(result.isWin)
+        XCTAssertEqual(engine.currentState.credits, initialCredits - 5)
+        XCTAssertEqual(engine.currentState.totalSpins, 1)
+    }
+
+    func testInsufficientCreditsCannotSpin() {
+        // Force spend all credits
+        engine.setBet(10)
+        for _ in 0..<10 {
+            _ = engine.spin(forcedSymbols: [.cherry, .lemon, .seven])
         }
+
+        XCTAssertEqual(engine.currentState.credits, 0)
+        XCTAssertFalse(engine.canSpin())
+
+        let result = engine.spin()
+        XCTAssertEqual(result.symbols.count, 0)
+        XCTAssertEqual(result.winAmount, 0)
     }
 
+    // MARK: - Payout and Win Detection Tests
+
+    func testCherryWinningCombination() {
+        engine.setBet(5)
+        let result = engine.spin(forcedSymbols: [.cherry, .cherry, .cherry])
+        XCTAssertTrue(result.isWin)
+        XCTAssertEqual(result.payout, 2)
+        XCTAssertEqual(result.winAmount, 10)
+        XCTAssertEqual(result.winningSymbol, .cherry)
+    }
+
+    func testLemonWinningCombination() {
+        engine.setBet(10)
+        let result = engine.spin(forcedSymbols: [.lemon, .lemon, .lemon])
+        XCTAssertTrue(result.isWin)
+        XCTAssertEqual(result.payout, 3)
+        XCTAssertEqual(result.winAmount, 30)
+    }
+
+    func testSevenWinningCombination() {
+        engine.setBet(1)
+        let result = engine.spin(forcedSymbols: [.seven, .seven, .seven])
+        XCTAssertTrue(result.isWin)
+        XCTAssertEqual(result.payout, 5)
+        XCTAssertEqual(result.winAmount, 5)
+    }
+
+    func testBellWinningCombination() {
+        engine.setBet(5)
+        let result = engine.spin(forcedSymbols: [.bell, .bell, .bell])
+        XCTAssertTrue(result.isWin)
+        XCTAssertEqual(result.payout, 10)
+        XCTAssertEqual(result.winAmount, 50)
+    }
+
+    func testStarWinningCombination() {
+        engine.setBet(1)
+        let result = engine.spin(forcedSymbols: [.star, .star, .star])
+        XCTAssertTrue(result.isWin)
+        XCTAssertEqual(result.payout, 15)
+        XCTAssertEqual(result.winAmount, 15)
+    }
+
+    func testDiamondWinningCombination() {
+        engine.setBet(10)
+        let result = engine.spin(forcedSymbols: [.diamond, .diamond, .diamond])
+        XCTAssertTrue(result.isWin)
+        XCTAssertEqual(result.payout, 25)
+        XCTAssertEqual(result.winAmount, 250)
+    }
+
+    func testNonMatchingCombinationIsLoss() {
+        let result = engine.spin(forcedSymbols: [.cherry, .bell, .cherry])
+        XCTAssertFalse(result.isWin)
+        XCTAssertEqual(result.payout, 0)
+        XCTAssertEqual(result.winAmount, 0)
+        XCTAssertNil(result.winningSymbol)
+    }
+
+    // MARK: - Statistics Tracking Tests
+
+    func testStatisticsTracking() {
+        engine.setBet(10)
+        _ = engine.spin(forcedSymbols: [.diamond, .diamond, .diamond]) // +250 win
+        _ = engine.spin(forcedSymbols: [.cherry, .lemon, .seven])      // loss
+        _ = engine.spin(forcedSymbols: [.lemon, .lemon, .lemon])       // +30 win
+
+        let state = engine.currentState
+        XCTAssertEqual(state.totalSpins, 3)
+        XCTAssertEqual(state.biggestWin, 250)
+        XCTAssertEqual(state.totalWinnings, 280)
+    }
+
+    // MARK: - Reset Game Tests
+
+    func testResetGame() {
+        engine.setBet(5)
+        _ = engine.spin(forcedSymbols: [.diamond, .diamond, .diamond])
+        engine.resetGame()
+
+        let state = engine.currentState
+        XCTAssertEqual(state.credits, GameConfig.initialCredits)
+        XCTAssertEqual(state.currentBet, GameConfig.defaultBet)
+        XCTAssertEqual(state.totalSpins, 0)
+        XCTAssertEqual(state.biggestWin, 0)
+        XCTAssertEqual(state.totalWinnings, 0)
+    }
 }

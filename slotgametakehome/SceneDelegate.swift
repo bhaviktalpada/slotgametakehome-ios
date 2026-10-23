@@ -1,19 +1,35 @@
+//
+//  SceneDelegate.swift
+//  slotgametakehome
+//
+//  Created by Developer on 22/10/26.
+
 import UIKit
 
+/// Scene delegate managing UIWindow presentation, root view controller hierarchy, and landscape geometry request.
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    // MARK: - Properties
+    /// Primary application window.
     var window: UIWindow?
 
+    // MARK: - UIScene Lifecycle Process
+
+    /// Configures the window scene, assigns `GameViewController` as the root view controller,
+    /// and requests landscape geometry update on iOS 16+.
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        window = UIWindow(windowScene: windowScene)
-        let gameVC = GameViewController()
-        window?.rootViewController = gameVC
-        window?.makeKeyAndVisible()
+        let window = UIWindow(windowScene: windowScene)
+        let gameViewController = GameViewController()
+        window.rootViewController = gameViewController
+        window.makeKeyAndVisible()
+        self.window = window
 
-        windowScene.sizeRestrictions?.minimumSize = CGSize(width: 1024, height: 768)
-        windowScene.sizeRestrictions?.maximumSize = CGSize(width: 1024, height: 768)
+        // Explicitly request landscape geometry for iPads running iOS 16+
+        if #available(iOS 16.0, *) {
+            windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: .landscape))
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) { }
